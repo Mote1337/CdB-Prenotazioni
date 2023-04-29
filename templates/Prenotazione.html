@@ -76,7 +76,15 @@
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Referente</span>
-        <input type="text" class="form-control" value="{{.prenotazione.Referente}}" id="referente" name="referente" aria-label="referente" aria-describedby="basic-addon1">
+        <select class="form-select" aria-label="referente" id="referente" name="referente">
+          {{range $attori := .listaAttori}}
+            {{if eq $attori.Nome $.prenotazione.Referente}}
+              <option selected value="{{$attori.Nome}}">{{$attori.Nome}}</option>
+            {{else}}
+              <option value="{{$attori.Nome}}">{{$attori.Nome}}</option>
+            {{end}}
+          {{end}}
+        </select>
       </div>
       <button type="submit" class="btn btn-primary">Prenota</button>
     </form>

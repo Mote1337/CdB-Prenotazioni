@@ -43,3 +43,8 @@ type Biglietto struct {
 	Tipo  string
 	Costo int
 }
+
+type Posti struct {
+	Nome  string
+	Posti int
+}

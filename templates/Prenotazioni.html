@@ -37,10 +37,37 @@
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Referente</span>
-        <input type="text" class="form-control" placeholder="Cambierà in Lista" id="referente" name="referente" aria-label="referente" aria-describedby="basic-addon1">
+        <select class="form-select" aria-label="referente" id="referente" name="referente">
+          {{range $attori := .listaAttori}}
+            <option value="{{$attori.Nome}}">{{$attori.Nome}}</option>
+          {{end}}
+        </select>
       </div>
       <button type="submit" class="btn btn-primary">Prenota</button>
     </form>
+    <br>
+    <table class="table table-bordered inline">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Prenotazioni</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{range .postiTotaliReferenti}}
+        <tr>
+          <td>{{.Nome}}</td>
+          <td>{{.Posti}}</td>
+        </tr>
+      {{end}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Totale</th>
+          <th>{{.postiTotaliPrenotati}}
+        </tr>
+      </tfoot>
+    </table>
     </div>
     <!-- COLONNA 2 -->
     <div class="col-7">
