@@ -38,7 +38,7 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>
+        <!--<th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>-->
         <th scope="col">Nome <a href="/spettacoli/read?orderby=Nome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Nome asc">&#x2193;</a></th>
         <th scope="col">Inizio <a href="/spettacoli/read?orderby=Inizio desc">&#x2191;</a><a href="/spettacoli/read?orderby=Inizio asc">&#x2193;</a></th>
         <th scope="col">Fine <a href="/spettacoli/read?orderby=Fine desc">&#x2191;</a><a href="/spettacoli/read?orderby=Fine asc">&#x2193;</a></th>
@@ -49,12 +49,12 @@
     <tbody>
       {{range .spettacoli}}
       <tr>
-        <td scope="row">{{.ID}}</td>
-        <td>{{.Nome}}</td>
-        <td>{{.Inizio.Format "2006-01-02"}}</td>
-        <td>{{.Fine.Format "2006-01-02"}}</td>
-        <td>{{.TeatroName}}</td>
-        <td>
+        <!--<td scope="row">{{.ID}}</td>-->
+        <td scope="row">{{.Nome}}</td>
+        <td scope="row">{{.Inizio.Format "2006-01-02"}}</td>
+        <td scope="row">{{.Fine.Format "2006-01-02"}}</td>
+        <td scope="row">{{.TeatroName}}</td>
+        <td scope="row">
           <form method="GET" action="/prenotazioni/read/{{.ID}}" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">Prenotazioni</button>
           </form>

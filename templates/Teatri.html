@@ -26,7 +26,7 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>
+        <!--<th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>-->
         <th scope="col">Nome <a href="/spettacoli/read?orderby=Nome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Nome asc">&#x2193;</a></th>
         <th scope="col">Posti <a href="/spettacoli/read?orderby=Posti desc">&#x2191;</a><a href="/spettacoli/read?orderby=Posti asc">&#x2193;</a></th>
         <th scope="col">Opzioni</th>
@@ -35,10 +35,10 @@
     <tbody>
       {{range .teatri}}
       <tr>
-        <td scope="row">{{.ID}}</td>
-        <td>{{.Nome}}</td>
-        <td>{{.Posti}}</td>
-        <td>
+        <!--<td scope="row">{{.ID}}</td>-->
+        <td scope="row">{{.Nome}}</td>
+        <td scope="row">{{.Posti}}</td>
+        <td scope="row">
           <form method="GET" action="/teatri/update/{{.ID}}" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">Modifica</button>
           </form>

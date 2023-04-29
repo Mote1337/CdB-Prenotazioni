@@ -30,7 +30,7 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>
+        <!--<th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>-->
         <th scope="col">Nome <a href="/spettacoli/read?orderby=Nome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Nome asc">&#x2193;</a></th>
         <th scope="col">Cognome <a href="/spettacoli/read?orderby=Cognome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Cognome asc">&#x2193;</a></th>
         <th scope="col">Email <a href="/spettacoli/read?orderby=Email desc">&#x2191;</a><a href="/spettacoli/read?orderby=Email asc">&#x2193;</a></th>
@@ -40,11 +40,11 @@
     <tbody>
       {{range .attori}}
       <tr>
-        <td scope="row">{{.ID}}</td>
-        <td>{{.Nome}}</td>
-        <td>{{.Cognome}}</td>
-        <td>{{.Email}}</td>
-        <td>
+        <!--<td scope="row">{{.ID}}</td>-->
+        <td scope="row">{{.Nome}}</td>
+        <td scope="row">{{.Cognome}}</td>
+        <td scope="row">{{.Email}}</td>
+        <td scope="row">
           <form method="GET" action="/attori/update/{{.ID}}" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">Modifica</button>
           </form>

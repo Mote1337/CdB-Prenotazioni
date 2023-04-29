@@ -12,41 +12,6 @@ func PostiTotaliPrenotati(prenotazioni []models.Prenotazione) int {
 	return totale
 }
 
-// FATTA DA ME
-/*
-func PostiPrenotatiReferente(prenotazioni []models.Prenotazione) {
-
-	var totale int
-
-	type Posti struct {
-		Nome  string
-		Posti int
-	}
-
-	uniqueNomi := make(map[string]bool)
-	for _, prenotazione := range prenotazioni {
-		uniqueNomi[prenotazione.Referente] = true
-	}
-
-	nomi := []string{}
-	for nome := range uniqueNomi {
-		nomi = append(nomi, nome)
-	}
-
-	var posti int
-	for _, nome := range nomi {
-		for _, prenotazione := range prenotazioni {
-			if nome == prenotazione.Referente {
-				posti += prenotazione.Posti
-			}
-			totale += prenotazione.Posti
-		}
-
-		posti = 0
-	}
-
-}
-*/
 // GPT
 func PostiPrenotatiReferente(prenotazioni []models.Prenotazione) []models.Posti {
 

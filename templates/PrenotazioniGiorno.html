@@ -78,9 +78,10 @@
       <table class="table table-bordered inline">
         <thead>
           <tr>
-           <th scope="col">ID <a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=ID desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=ID asc">&#x2193;</a></th>
+            <!--<th scope="col">ID <a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=ID desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=ID asc">&#x2193;</a></th>-->
             <th scope="col">Nome <a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=Nome desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=Nome asc">&#x2193;</a></th>
             <th scope="col">Posti <a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=Posti desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=Posti asc">&#x2193;</a></th>
+            <th scope="col">Biglietto</th>
             <th scope="col">Data</th>
             <th scope="col">Referente <a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=Referente desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?data={{.dateQuery}}&orderby=Referente asc">&#x2193;</a></th>
             <th scope="col">Opzioni</th>
@@ -89,12 +90,13 @@
        <tbody>
         {{range .prenotazioni}}
          <tr>
-            <td scope="row">{{.ID}}</td>
-            <td>{{.Nome}}</td>
-            <td>{{.Posti}}</td>
-            <td>{{.Data.Format "02/01/2006"}}</td>
-            <td>{{.Referente}}</td>
-            <td>
+            <!--<td scope="row">{{.ID}}</td>-->
+            <td scope="row">{{.Nome}}</td>
+            <td scope="row">{{.Posti}}</td>
+            <td scope="row">test</td>
+            <td scope="row">{{.Data.Format "02/01/2006"}}</td>
+            <td scope="row">{{.Referente}}</td>
+            <td scope="row">
               <form method="GET" action="/prenotazioni/update/{{.ID}}" style="display: inline-block;">
                 <button type="submit" class="btn btn-primary">Modifica</button>
               </form>
