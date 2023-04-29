@@ -23,6 +23,11 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 	date := helper.DateRange(spettacolo.Inizio, spettacolo.Fine)
 	// Numero minimo e massimo di prenotazioni per singola persona
 	numeriPosti := helper.SlicePosti(1, 10)
+	// Get Lista attori
+	var listaAttori []models.Attore
+	if err := initializers.DB.Find(&listaAttori).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Attori non trovati"})
+	}
 
 	dateQuery := c.DefaultQuery("data", "NODATA")
 
@@ -35,6 +40,7 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 			"spettacolo":   spettacolo,
 			"date":         date,
 			"numeriPosti":  numeriPosti,
+			"listaAttori":  listaAttori,
 		}
 
 		c.HTML(http.StatusOK, "Prenotazioni.html", data)
@@ -49,6 +55,7 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 			"dateQuery":      dateQuery,
 			"numeriPosti":    numeriPosti,
 			"postiprenotati": helper.GetPostiPrenotati(dateQuery),
+			"listaAttori":    listaAttori,
 		}
 		c.HTML(http.StatusOK, "PrenotazioniGiorno.html", data)
 	}
@@ -121,6 +128,12 @@ func GetUpdatePrenotazione(c *gin.Context) {
 		return
 	}
 
+	// Get Lista attori
+	var listaAttori []models.Attore
+	if err := initializers.DB.Find(&listaAttori).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Attori non trovati"})
+	}
+
 	// Mi ricavo le date disponibili
 	date := helper.DateRange(spettacolo.Inizio, spettacolo.Fine)
 
@@ -129,6 +142,7 @@ func GetUpdatePrenotazione(c *gin.Context) {
 		"numeriPosti":  slicePosti,
 		"date":         date,
 		"spettacolo":   spettacolo,
+		"listaAttori":  listaAttori,
 	}
 	c.HTML(http.StatusOK, "Prenotazione.html", data)
 }
