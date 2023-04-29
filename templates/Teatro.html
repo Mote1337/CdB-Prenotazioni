@@ -1,0 +1,48 @@
+{{template "header.html"}}
+  <title>Gestione Teatri</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    </div>
+  <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Attori</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Posti</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row">{{.teatro.ID}}</td>
+        <td>{{.teatro.Nome}}</td>
+        <td>{{.teatro.Posti}}</td>
+      </tr>
+    </tbody>
+  </table>
+      <h2>Modifica Teatro</h2>
+    <form method="POST" action="/teatri/update/{{.teatro.ID}}">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" value="{{.teatro.Nome}}" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Posti</span>
+        <input type="text" class="form-control" value="{{.teatro.Posti}}" id="posti" name="posti" aria-label="posti" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Modifica Teatro</button>
+    </form>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}

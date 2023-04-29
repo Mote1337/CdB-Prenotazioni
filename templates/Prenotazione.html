@@ -1,0 +1,89 @@
+{{template "header.html"}}
+  <title>Gestione Prenotazioni</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    </div>
+    <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Prenotazioni per <a href="/prenotazioni/reads/{{.spettacolo.ID}}">{{.spettacolo.Nome}}</a> dal {{.spettacolo.Inizio.Format "02/01/2006"}} al {{.spettacolo.Fine.Format "02/01/2006"}}</h2>
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        {{range $date := .date}}
+          <a href="/prenotazioni/read/{{$.spettacolo.ID}}?data={{$date.Format "2006-01-02"}}" class="btn btn-outline-primary" aria-current="page">{{$date.Format "02/01/2006"}}</a>
+        {{end}}
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+           <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Posti</th>
+            <th scope="col">Data</th>
+            <th scope="col">Referente</th>
+         </tr>
+        </thead>
+       <tbody>
+         <tr>
+            <td scope="row">{{.prenotazione.ID}}</td>
+            <td>{{.prenotazione.Nome}}</td>
+            <td>{{.prenotazione.Posti}}</td>
+            <td>{{.prenotazione.Data.Format "02/01/2006"}}</td>
+            <td>{{.prenotazione.Referente}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Modifica Prenotazione</h2>
+    <form method="POST" action="/prenotazioni/update/{{.prenotazione.ID}}">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" value="{{.prenotazione.Nome}}" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Posti</span>
+        <select class="form-select" aria-label="posti" id="posti" name="posti">
+          {{range $numeriPosti := .numeriPosti}}
+            {{if eq $numeriPosti $.prenotazione.Posti}}
+              <option selected value="{{$numeriPosti}}">{{$numeriPosti}}</option>
+            {{else}}
+              <option value="{{$numeriPosti}}">{{$numeriPosti}}</option>
+            {{end}}
+          {{end}}
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Data</span>
+        <select class="form-select" aria-label="data" id="data" name="data">
+          {{range $date := .date}}
+            {{ $dateFormat := $date.Format "2006-01-02"}}
+            {{ $prenotazioneFormat := $.prenotazione.Data.Format "2006-01-02"}}
+            {{if eq $dateFormat $prenotazioneFormat }}
+              <option selected value="{{$date.Format "2006-01-02"}}">{{$date.Format "02/01/2006"}}</option>
+            {{else}}
+              <option value="{{$date.Format "2006-01-02"}}">{{$date.Format "02/01/2006"}}</option>
+            {{end}}
+          {{end}}
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Spettacolo</span>
+        <select class="form-select" aria-label="spettacoloID" id="spettacoloID" name="spettacoloID">
+            <option value="{{.spettacolo.ID}}">{{.spettacolo.Nome}}</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Referente</span>
+        <input type="text" class="form-control" value="{{.prenotazione.Referente}}" id="referente" name="referente" aria-label="referente" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Prenota</button>
+    </form>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}
