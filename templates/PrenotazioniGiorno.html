@@ -43,7 +43,29 @@
       </div>
       <button type="submit" class="btn btn-primary">Prenota</button>
     </form>
-    <p>Posti Prenotati: {{.postiTotaliPrenotati}}</p>
+    <br>
+    <table class="table table-bordered inline">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Prenotazioni</th>
+        </tr>
+      </thead>
+      <tbody>
+      {{range .postiTotaliReferenti}}
+        <tr>
+          <td>{{.Nome}}</td>
+          <td>{{.Posti}}</td>
+        </tr>
+      {{end}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Totale</th>
+          <th>{{.postiTotaliPrenotati}}
+        </tr>
+      </tfoot>
+    </table>
     </div>
     <!-- COLONNA 2 -->
     <div class="col-7">

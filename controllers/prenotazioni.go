@@ -42,10 +42,13 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 			"numeriPosti":          numeriPosti,
 			"listaAttori":          listaAttori,
 			"postiTotaliPrenotati": helper.PostiTotaliPrenotati(prenotazioni),
+			"postiTotaliReferenti": helper.PostiPrenotatiReferente(prenotazioni),
 		}
 
 		c.HTML(http.StatusOK, "Prenotazioni.html", data)
+
 	} else {
+
 		var prenotazioni []models.Prenotazione
 		initializers.DB.Where("data::date = ?", dateQuery).Order(c.Query("orderby")).Find(&prenotazioni)
 
@@ -58,6 +61,7 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 			"postiprenotati":       helper.GetPostiPrenotati(dateQuery),
 			"listaAttori":          listaAttori,
 			"postiTotaliPrenotati": helper.PostiTotaliPrenotati(prenotazioni),
+			"postiTotaliReferenti": helper.PostiPrenotatiReferente(prenotazioni),
 		}
 
 		c.HTML(http.StatusOK, "PrenotazioniGiorno.html", data)
