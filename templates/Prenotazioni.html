@@ -1,0 +1,92 @@
+{{template "header.html"}}
+  <title>Gestione Prenotazioni</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center container-fluid">
+  <div class="row align-items-start">
+  <!-- COLONNA 1 -->
+    <div class="col-3">
+    <h2>Crea Prenotazione</h2>
+    <form method="POST" action="/prenotazioni/create">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" placeholder="Nome Prenotazione" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Posti</span>
+        <select class="form-select" aria-label="posti" id="posti" name="posti">
+          {{range $i := .numeriPosti}}
+            <option value="{{$i}}">{{$i}}</option>
+          {{end}}
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Data</span>
+        <select class="form-select" aria-label="data" id="data" name="data">
+          {{range $date := .date}}
+            <option value="{{$date.Format "2006-01-02"}}">{{$date.Format "02/01/2006"}}</option>
+          {{end}}
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Spettacolo</span>
+        <select class="form-select" aria-label="spettacoloID" id="spettacoloID" name="spettacoloID">
+            <option value="{{.spettacolo.ID}}">{{.spettacolo.Nome}}</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Referente</span>
+        <input type="text" class="form-control" placeholder="Cambierà in Lista" id="referente" name="referente" aria-label="referente" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Prenota</button>
+    </form>
+    </div>
+    <!-- COLONNA 2 -->
+    <div class="col-7">
+      <h2>Prenotazioni per <a href="/prenotazioni/read/{{.spettacolo.ID}}">{{.spettacolo.Nome}}</a> dal {{.spettacolo.Inizio.Format "02/01/2006"}} al {{.spettacolo.Fine.Format "02/01/2006"}}</h2>
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        {{range $date := .date}}
+          <a href="/prenotazioni/read/{{$.spettacolo.ID}}?data={{$date.Format "2006-01-02"}}" class="btn btn-outline-primary" aria-current="page">{{$date.Format "02/01/2006"}}</a>
+        {{end}}
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+           <th scope="col">ID <a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=ID desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=ID asc">&#x2193;</a></th>
+            <th scope="col">Nome <a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Nome desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Nome asc">&#x2193;</a></th>
+            <th scope="col">Posti <a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Posti desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Posti asc">&#x2193;</a></th>
+            <th scope="col">Data <a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Data desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Data asc">&#x2193;</a></th>
+            <th scope="col">Referente <a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Referente desc">&#x2191;</a><a href="/prenotazioni/read/{{.spettacolo.ID}}?orderby=Referente asc">&#x2193;</a></th>
+            <th scope="col">Opzioni</th>
+         </tr>
+        </thead>
+       <tbody>
+        {{range .prenotazioni}}
+         <tr>
+            <td scope="row">{{.ID}}</td>
+            <td>{{.Nome}}</td>
+            <td>{{.Posti}}</td>
+            <td>{{.Data.Format "02/01/2006"}}</td>
+            <td>{{.Referente}}</td>
+            <td>
+              <form method="GET" action="/prenotazioni/update/{{.ID}}" style="display: inline-block;">
+                <button type="submit" class="btn btn-primary">Modifica</button>
+              </form>
+              <form method="POST" action="/prenotazioni/delete/{{.ID}}" style="display: inline-block;" onsubmit="return confirm('Sei sicuro di voler eliminare lo spettacolo {{.Nome}}?')" >
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-primary">Elimina</button>
+              </form>
+            </td>
+          </tr>
+        {{end}}
+        </tbody>
+      </table>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-2">
+    <p>Export to:</p><a href="/export/csv/prenotazioni/{{.spettacolo.ID}}">CSV</a>
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}

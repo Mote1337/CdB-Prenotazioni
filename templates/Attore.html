@@ -1,0 +1,56 @@
+{{template "header.html"}}
+  <title>Gestione Attori</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    </div>
+  <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Attore</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Cognome</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row">{{.attore.ID}}</td>
+        <td>{{.attore.Nome}}</td>
+        <td>{{.attore.Cognome}}</td>
+        <td>{{.attore.Email}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="container">
+      <h2>Modifica Attore</h2>
+    <form method="POST" action="/attori/update/{{.attore.ID}}">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" value="{{.attore.Nome}}" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Cognome</span>
+        <input type="text" class="form-control" value="{{.attore.Cognome}}" id="cognome" name="cognome" aria-label="cognome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Email</span>
+        <input type="email" class="form-control" value="{{.attore.Email}}" id="email" name="email" aria-label="email" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Crea Attore</button>
+    </form>
+    </div>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}

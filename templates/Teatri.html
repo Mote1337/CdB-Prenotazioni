@@ -1,0 +1,61 @@
+{{template "header.html"}}
+  <title>Gestione Teatri</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    <h2>Crea Teatro</h2>
+    <form method="POST" action="/teatri/create">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" placeholder="Nome Teatro" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Posti</span>
+        <input type="text" class="form-control" placeholder="Posti Teatro" id="posti" name="posti" aria-label="posti" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Crea Teatro</button>
+    </form>
+    </div>
+  <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Teatri</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>
+        <th scope="col">Nome <a href="/spettacoli/read?orderby=Nome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Nome asc">&#x2193;</a></th>
+        <th scope="col">Posti <a href="/spettacoli/read?orderby=Posti desc">&#x2191;</a><a href="/spettacoli/read?orderby=Posti asc">&#x2193;</a></th>
+        <th scope="col">Opzioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .teatri}}
+      <tr>
+        <td scope="row">{{.ID}}</td>
+        <td>{{.Nome}}</td>
+        <td>{{.Posti}}</td>
+        <td>
+          <form method="GET" action="/teatri/update/{{.ID}}" style="display: inline-block;">
+            <button type="submit" class="btn btn-primary">Modifica</button>
+          </form>
+          <form method="POST" action="/teatri/delete/{{.ID}}" style="display: inline-block;" onsubmit="return confirm('Sei sicuro di voler eliminare lo spettacolo {{.Nome}}?')" >
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-primary">Elimina</button>
+          </form>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    <p>Export to:</p><a href="/export/csv/teatri">CSV</a>
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}

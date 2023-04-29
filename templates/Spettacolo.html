@@ -1,0 +1,68 @@
+{{template "header.html"}}
+  <title>Gestione Spettacoli</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    </div>
+  <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Spettacolo</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Inizio</th>
+        <th scope="col">Fine</th>
+        <th scope="col">Teatro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row">{{.spettacolo.ID}}</td>
+        <td>{{.spettacolo.Nome}}</td>
+        <td>{{.spettacolo.Inizio.Format "2006-01-02"}}</td>
+        <td>{{.spettacolo.Fine.Format "2006-01-02"}}</td>
+        <td>{{.spettacolo.TeatroName}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Modifica Spettacolo</h2>
+    <form method="POST" action="/spettacoli/update/{{.spettacolo.ID}}">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" value="{{.spettacolo.Nome}}" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Data Inizio</span>
+        <input type="date" class="form-control" id="inizio" name="inizio" value="{{.spettacolo.Inizio.Format "2006-01-02"}}" aria-label="inizio" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Data Fine</span>
+        <input type="date" class="form-control" id="fine" name="fine" value="{{.spettacolo.Fine.Format "2006-01-02"}}" aria-label="fine" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Teatro</span>
+        <select class="form-select" aria-label="teatro" id="teatro" name="teatro">
+          {{range $teatro := .teatri}}
+            {{ if eq $teatro.ID $.spettacolo.TeatroID }}
+              <option selected value="{{$teatro.ID}}">{{$teatro.Nome}}</option>
+            {{else}}
+              <option value="{{$teatro.ID}}">{{$teatro.Nome}}</option>
+            {{end}}
+          {{end}}
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Modifica Spettacolo</button>
+    </form>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}

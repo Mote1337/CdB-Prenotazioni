@@ -1,0 +1,67 @@
+{{template "header.html"}}
+  <title>Gestione Attori</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    <h2>Crea Attore</h2>
+    <form method="POST" action="/attori/create">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" aria-label="nome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Cognome</span>
+        <input type="text" class="form-control" placeholder="Cognome" id="cognome" name="cognome" aria-label="cognome" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Email</span>
+        <input type="email" class="form-control" placeholder="Email" id="email" name="email" aria-label="email" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Crea Attore</button>
+    </form>
+    </div>
+  <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Attori</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID <a href="/spettacoli/read?orderby=ID desc">&#x2191;</a><a href="/spettacoli/read?orderby=ID asc">&#x2193;</a></th>
+        <th scope="col">Nome <a href="/spettacoli/read?orderby=Nome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Nome asc">&#x2193;</a></th>
+        <th scope="col">Cognome <a href="/spettacoli/read?orderby=Cognome desc">&#x2191;</a><a href="/spettacoli/read?orderby=Cognome asc">&#x2193;</a></th>
+        <th scope="col">Email <a href="/spettacoli/read?orderby=Email desc">&#x2191;</a><a href="/spettacoli/read?orderby=Email asc">&#x2193;</a></th>
+        <th scope="col">Opzioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .attori}}
+      <tr>
+        <td scope="row">{{.ID}}</td>
+        <td>{{.Nome}}</td>
+        <td>{{.Cognome}}</td>
+        <td>{{.Email}}</td>
+        <td>
+          <form method="GET" action="/attori/update/{{.ID}}" style="display: inline-block;">
+            <button type="submit" class="btn btn-primary">Modifica</button>
+          </form>
+          <form method="POST" action="/attori/delete/{{.ID}}" style="display: inline-block;" onsubmit="return confirm('Sei sicuro di voler eliminare lo spettacolo {{.Nome}}?')" >
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-primary">Elimina</button>
+          </form>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    <p>Export to:</p><a href="/export/csv/attori">CSV</a>
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}
