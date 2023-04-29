@@ -36,11 +36,12 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 		initializers.DB.Where("spettacolo_id = ?", spettacolo.ID).Order(c.Query("orderby")).Find(&prenotazioni)
 
 		data := gin.H{
-			"prenotazioni": prenotazioni,
-			"spettacolo":   spettacolo,
-			"date":         date,
-			"numeriPosti":  numeriPosti,
-			"listaAttori":  listaAttori,
+			"prenotazioni":         prenotazioni,
+			"spettacolo":           spettacolo,
+			"date":                 date,
+			"numeriPosti":          numeriPosti,
+			"listaAttori":          listaAttori,
+			"postiTotaliPrenotati": helper.PostiTotaliPrenotati(prenotazioni),
 		}
 
 		c.HTML(http.StatusOK, "Prenotazioni.html", data)
@@ -49,14 +50,16 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 		initializers.DB.Where("data::date = ?", dateQuery).Order(c.Query("orderby")).Find(&prenotazioni)
 
 		data := gin.H{
-			"prenotazioni":   prenotazioni,
-			"spettacolo":     spettacolo,
-			"date":           date,
-			"dateQuery":      dateQuery,
-			"numeriPosti":    numeriPosti,
-			"postiprenotati": helper.GetPostiPrenotati(dateQuery),
-			"listaAttori":    listaAttori,
+			"prenotazioni":         prenotazioni,
+			"spettacolo":           spettacolo,
+			"date":                 date,
+			"dateQuery":            dateQuery,
+			"numeriPosti":          numeriPosti,
+			"postiprenotati":       helper.GetPostiPrenotati(dateQuery),
+			"listaAttori":          listaAttori,
+			"postiTotaliPrenotati": helper.PostiTotaliPrenotati(prenotazioni),
 		}
+
 		c.HTML(http.StatusOK, "PrenotazioniGiorno.html", data)
 	}
 
