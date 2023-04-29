@@ -100,10 +100,6 @@ func PostCreatePrenotazione(c *gin.Context) {
 		},
 	}
 
-	if c.Query("data") != "" {
-		c.Request.URL.Query().Add("data", c.Query("data"))
-	}
-
 	ReadPrenotazioniUnico(c)
 }
 
