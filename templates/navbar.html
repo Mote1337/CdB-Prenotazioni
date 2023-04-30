@@ -1,40 +1,27 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Compagnia Del Bagatto</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Spettacoli</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/spettacoli/read">Lista Spettacoli</a></li>
-            <li><a class="dropdown-item" href="/spettacoli/create">Crea Spettacolo</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Attori</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/attori/read">Lista Attori</a></li>
-            <li><a class="dropdown-item" href="/attori/create">Crea Attore</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Teatri</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/teatri/read">Lista Teatri</a></li>
-            <li><a class="dropdown-item" href="/teatri/create">Crea Teatro</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Prenotazioni</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Compagnia Del Bagatto</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/spettacoli/read">Spettacoli</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/attori/read">Attori</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/teatri/read">Teatri</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/biglietti/read">Biglietti</a>
+      </li>
+    </ul>
+    <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
+    </form>
   </div>
 </nav>

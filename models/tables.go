@@ -48,3 +48,9 @@ type Posti struct {
 	Nome  string
 	Posti int
 }
+
+type Ticket struct {
+	gorm.Model
+	Name  string
+	Price Money
+}

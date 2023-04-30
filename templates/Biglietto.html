@@ -1,0 +1,48 @@
+{{template "header.html"}}
+  <title>Gestione Biglietti</title>
+</head>
+<body>
+{{template "navbar.html"}}
+<div class="text-center">
+  <div class="row align-items-center">
+  <!-- COLONNA 1 -->
+    <div class="col-2">
+    </div>
+  <!-- COLONNA 2 -->
+    <div class="col-9">
+      <h2>Biglietto</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <!--<th scope="col">ID</th>-->
+        <th scope="col">Tipo</th>
+        <th scope="col">Costo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <!--<td scope="row">{{.biglietto.ID}}</td>-->
+        <td scope="row">{{.biglietto.Tipo}}</td>
+        <td scope="row">{{.biglietto.Costo}}</td>
+      </tr>
+    </tbody>
+  </table>
+      <h2>Modifica Biglietto</h2>
+    <form method="POST" action="/biglietti/update/{{.biglietto.ID}}">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Nome</span>
+        <input type="text" class="form-control" value="{{.biglietto.Tipo}}" id="tipo" name="tipo" aria-label="tipo" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Costo</span>
+        <input type="text" class="form-control" value="{{.biglietto.Costo}}" id="costo" name="costo" aria-label="costo" aria-describedby="basic-addon1">
+      </div>
+      <button type="submit" class="btn btn-primary">Modifica Biglietto</button>
+    </form>
+    </div>
+    <!-- COLONNA 3 -->
+    <div class="col-1">
+    </div>
+  </div>
+</div>
+{{template "footer.html"}}

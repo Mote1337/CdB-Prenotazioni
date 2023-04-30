@@ -78,7 +78,7 @@ func GetUpdateTeatri(c *gin.Context) {
 	c.HTML(http.StatusOK, "Teatro.html", data)
 }
 
-func UpdateTeatri(c *gin.Context) {
+func PostUpdateTeatri(c *gin.Context) {
 	id := c.Param("id")
 
 	var teatro models.Teatro

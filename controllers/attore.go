@@ -66,7 +66,7 @@ func GetUpdateAttore(c *gin.Context) {
 	c.HTML(http.StatusOK, "Attore.html", data)
 }
 
-func UpdateAttore(c *gin.Context) {
+func PostUpdateAttore(c *gin.Context) {
 	id := c.Param("id")
 
 	var attore models.Attore

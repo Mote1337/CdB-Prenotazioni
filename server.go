@@ -10,7 +10,7 @@ import (
 
 func init() {
 	initializers.ConnectToDB()
-	initializers.DB.AutoMigrate(&models.Prenotazione{}, &models.Spettacolo{}, &models.Teatro{}, &models.Attore{})
+	initializers.DB.AutoMigrate(&models.Prenotazione{}, &models.Spettacolo{}, &models.Teatro{}, &models.Attore{}, &models.Biglietto{})
 }
 
 func main() {
@@ -52,7 +52,7 @@ func main() {
 		teatriRoutes.GET("/read", controllers.ReadTeatri)
 		// CRUD - UPDATE
 		teatriRoutes.GET("/update/:id", controllers.GetUpdateTeatri)
-		teatriRoutes.POST("/update/:id", controllers.UpdateTeatri)
+		teatriRoutes.POST("/update/:id", controllers.PostUpdateTeatri)
 		// CRUD - DELETE
 		teatriRoutes.POST("/delete/:id", controllers.DeleteTeatri)
 	}
@@ -65,7 +65,7 @@ func main() {
 		attoriRoutes.GET("/read", controllers.ReadAttori)
 		// CRUD - UPDATE
 		attoriRoutes.GET("/update/:id", controllers.GetUpdateAttore)
-		attoriRoutes.POST("/update/:id", controllers.UpdateAttore)
+		attoriRoutes.POST("/update/:id", controllers.PostUpdateAttore)
 		// CRUD - DELETE
 		attoriRoutes.POST("/delete/:id", controllers.DeleteAttore)
 	}
@@ -77,6 +77,20 @@ func main() {
 		exportRoutes.GET("csv/teatri", controllers.ExportToCSVTeatri)
 		exportRoutes.GET("csv/attori", controllers.ExportToCSVAttori)
 	}
+
+	bigliettiRoutes := r.Group("/biglietti")
+	{
+		// CRUD - CREATE
+		bigliettiRoutes.POST("/create", controllers.CreateBiglietto)
+		// CRUD - READ
+		bigliettiRoutes.GET("/read", controllers.ReadBiglietto)
+		// CRUD - UPDATE
+		bigliettiRoutes.GET("/update/:id", controllers.GetUpdateBiglietto)
+		bigliettiRoutes.POST("/update/:id", controllers.PostUpdatBiglietto)
+		// CRUD - DELETE
+		bigliettiRoutes.POST("/delete/:id", controllers.DeleteBiglietto)
+	}
+
 	r.GET("/", controllers.ReadRoot)
 	r.Run(":3000")
 }
