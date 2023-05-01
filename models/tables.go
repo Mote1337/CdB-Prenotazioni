@@ -19,6 +19,8 @@ type Prenotazione struct {
 	gorm.Model
 	Nome           string
 	Posti          int
+	BigliettoTipo  string
+	BigliettoID    int
 	Data           time.Time
 	SpettacoloID   uint
 	SpettacoloName string

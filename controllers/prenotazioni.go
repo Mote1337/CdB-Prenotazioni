@@ -28,12 +28,29 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 	if err := initializers.DB.Find(&listaAttori).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Attori non trovati"})
 	}
+	// Get Biglietti
+	var biglietti []models.Biglietto
+	if err := initializers.DB.Find(&biglietti).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Biglietti non trovati"})
+	}
+	//Calcolo totale dei biglietti
+	bigliettiPerTipo := make(map[string]struct {
+		NumBiglietti int
+		CostoTotale  int
+	})
 
 	dateQuery := c.DefaultQuery("data", "NODATA")
 
 	if dateQuery == "NODATA" {
 		var prenotazioni []models.Prenotazione
 		initializers.DB.Where("spettacolo_id = ?", spettacolo.ID).Order(c.Query("orderby")).Find(&prenotazioni)
+		bigliettiPerTipo = helper.BigliettiTotali(prenotazioni)
+
+		var totaleBiglietti, totaleCosti int
+		for _, val := range bigliettiPerTipo {
+			totaleBiglietti += val.NumBiglietti
+			totaleCosti += val.CostoTotale
+		}
 
 		data := gin.H{
 			"prenotazioni":         prenotazioni,
@@ -43,14 +60,26 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 			"listaAttori":          listaAttori,
 			"postiTotaliPrenotati": helper.PostiTotaliPrenotati(prenotazioni),
 			"postiTotaliReferenti": helper.PostiPrenotatiReferente(prenotazioni),
+			"biglietti":            biglietti,
+			"bigliettiCalcolo":     bigliettiPerTipo,
+			"totaleBiglietti":      totaleBiglietti,
+			"totaleCosti":          totaleCosti,
 		}
-
+		helper.BigliettiTotali(prenotazioni)
 		c.HTML(http.StatusOK, "Prenotazioni.html", data)
 
 	} else {
 
 		var prenotazioni []models.Prenotazione
 		initializers.DB.Where("data::date = ?", dateQuery).Order(c.Query("orderby")).Find(&prenotazioni)
+		// Calcolo dei Biglietti
+		bigliettiPerTipo = helper.BigliettiTotali(prenotazioni)
+
+		var totaleBiglietti, totaleCosti int
+		for _, val := range bigliettiPerTipo {
+			totaleBiglietti += val.NumBiglietti
+			totaleCosti += val.CostoTotale
+		}
 
 		data := gin.H{
 			"prenotazioni":         prenotazioni,
@@ -62,8 +91,12 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 			"listaAttori":          listaAttori,
 			"postiTotaliPrenotati": helper.PostiTotaliPrenotati(prenotazioni),
 			"postiTotaliReferenti": helper.PostiPrenotatiReferente(prenotazioni),
+			"biglietti":            biglietti,
+			"bigliettiCalcolo":     bigliettiPerTipo,
+			"totaleBiglietti":      totaleBiglietti,
+			"totaleCosti":          totaleCosti,
 		}
-
+		helper.BigliettiTotali(prenotazioni)
 		c.HTML(http.StatusOK, "PrenotazioniGiorno.html", data)
 	}
 
@@ -91,6 +124,14 @@ func PostCreatePrenotazione(c *gin.Context) {
 
 	// Campo Prenotazione Referente
 	prenotazione.Referente = c.PostForm("referente")
+
+	// Biglietto
+	prenotazione.BigliettoID = helper.ReturnIntFromString(c, c.PostForm("bigliettoID"))
+	var biglietto models.Biglietto
+	if err := initializers.DB.First(&biglietto, prenotazione.BigliettoID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Biglietti non trovati"})
+	}
+	prenotazione.BigliettoTipo = biglietto.Tipo
 
 	// Creazione Prenotazione con i dati reperiti
 	if err := initializers.DB.Create(&prenotazione).Error; err != nil {
@@ -140,12 +181,19 @@ func GetUpdatePrenotazione(c *gin.Context) {
 	// Mi ricavo le date disponibili
 	date := helper.DateRange(spettacolo.Inizio, spettacolo.Fine)
 
+	// Get Biglietti
+	var biglietti []models.Biglietto
+	if err := initializers.DB.Find(&biglietti).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Biglietti non trovati"})
+	}
+
 	data := gin.H{
 		"prenotazione": prenotazione,
 		"numeriPosti":  slicePosti,
 		"date":         date,
 		"spettacolo":   spettacolo,
 		"listaAttori":  listaAttori,
+		"biglietti":    biglietti,
 	}
 	c.HTML(http.StatusOK, "Prenotazione.html", data)
 }
@@ -176,6 +224,13 @@ func PostUpdatePrenotazione(c *gin.Context) {
 	// Campo Prenotazione Referente
 	prenotazione.Referente = c.PostForm("referente")
 
+	// Biglietto
+	prenotazione.BigliettoID = helper.ReturnIntFromString(c, c.PostForm("bigliettoID"))
+	var biglietti models.Biglietto
+	if err := initializers.DB.First(&biglietti, prenotazione.BigliettoID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Biglietti non trovati"})
+	}
+	prenotazione.BigliettoTipo = biglietti.Tipo
 	// Aggiornamento Prenotazione con i dati reperiti
 	if err := initializers.DB.Save(&prenotazione).Error; err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})

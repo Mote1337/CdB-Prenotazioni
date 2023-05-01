@@ -10,7 +10,7 @@
     </div>
     <!-- COLONNA 2 -->
     <div class="col-9">
-      <h2>Prenotazioni per <a href="/prenotazioni/reads/{{.spettacolo.ID}}">{{.spettacolo.Nome}}</a> dal {{.spettacolo.Inizio.Format "02/01/2006"}} al {{.spettacolo.Fine.Format "02/01/2006"}}</h2>
+      <h2>Prenotazioni per <a href="/prenotazioni/read/{{.spettacolo.ID}}">{{.spettacolo.Nome}}</a> dal {{.spettacolo.Inizio.Format "02/01/2006"}} al {{.spettacolo.Fine.Format "02/01/2006"}}</h2>
       <div class="btn-group" role="group" aria-label="Basic outlined example">
         {{range $date := .date}}
           <a href="/prenotazioni/read/{{$.spettacolo.ID}}?data={{$date.Format "2006-01-02"}}" class="btn btn-outline-primary" aria-current="page">{{$date.Format "02/01/2006"}}</a>
@@ -22,6 +22,7 @@
             <!--<th scope="col">ID</th>-->
             <th scope="col">Nome</th>
             <th scope="col">Posti</th>
+            <th scope="col">Biglietto</th>
             <th scope="col">Data</th>
             <th scope="col">Referente</th>
          </tr>
@@ -31,6 +32,7 @@
             <!--<td scope="row">{{.prenotazione.ID}}</td>-->
             <td scope="row">{{.prenotazione.Nome}}</td>
             <td scope="row">{{.prenotazione.Posti}}</td>
+            <td scope="row">{{.prenotazione.BigliettoTipo}}</td>
             <td scope="row">{{.prenotazione.Data.Format "02/01/2006"}}</td>
             <td scope="row">{{.prenotazione.Referente}}</td>
           </tr>
@@ -50,6 +52,18 @@
               <option selected value="{{$numeriPosti}}">{{$numeriPosti}}</option>
             {{else}}
               <option value="{{$numeriPosti}}">{{$numeriPosti}}</option>
+            {{end}}
+          {{end}}
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Biglietto</span>
+        <select class="form-select" aria-label="bigliettoID" id="bigliettoID" name="bigliettoID">
+          {{range $biglietti := .biglietti}}
+            {{if eq $biglietti.ID $.prenotazione.BigliettoID}}
+              <option selected value="{{$biglietti.ID}}">{{$biglietti.Tipo}} ({{$biglietti.Costo}}€)</option>
+            {{else}}
+            <option value="{{$biglietti.ID}}">{{$biglietti.Tipo}} ({{$biglietti.Costo}}€)</option>
             {{end}}
           {{end}}
         </select>
