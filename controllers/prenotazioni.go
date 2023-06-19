@@ -33,7 +33,7 @@ func ReadPrenotazioniUnico(c *gin.Context) {
 	if err := initializers.DB.Find(&biglietti).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Biglietti non trovati"})
 	}
-	//Calcolo totale dei biglietti
+	// Calcolo totale dei biglietti
 	bigliettiPerTipo := make(map[string]struct {
 		NumBiglietti int
 		CostoTotale  int
