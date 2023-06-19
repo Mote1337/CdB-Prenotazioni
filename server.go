@@ -17,6 +17,7 @@ func main() {
 	r := gin.Default()
 
 	r.LoadHTMLGlob("templates/*.html")
+	r.Static("/imgs", "./imgs")
 
 	spettacoliRoutes := r.Group("/spettacoli")
 	{
