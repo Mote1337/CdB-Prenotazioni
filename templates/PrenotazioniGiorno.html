@@ -22,6 +22,14 @@
         </select>
       </div>
       <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Biglietto</span>
+        <select class="form-select" aria-label="bigliettoID" id="bigliettoID" name="bigliettoID">
+          {{range $i := .biglietti}}
+            <option value="{{$biglietti.ID}}">{{.Tipo}} ({{.Costo}}€)</option>
+          {{end}}
+        </select>
+      </div>
+      <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">Data</span>
         <select class="form-select" aria-label="data" id="data" name="data">
               <option value="{{.dateQuery}}">{{.dateQuery}}</option>
