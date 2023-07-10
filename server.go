@@ -92,5 +92,5 @@ func main() {
 	}
 
 	r.GET("/", controllers.ReadRoot)
-	r.Run(":3000")
+	r.Run(":8080")
 }
